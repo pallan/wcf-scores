@@ -1,12 +1,5 @@
-import { useState } from 'react'
 import { useLiveResults } from '../hooks/useLiveResults'
-import { RefreshButton } from './RefreshButton'
 import type { TeamData } from '../types/api'
-
-const EVENTS = [
-  { label: 'Men',   eventId: 1 },
-  { label: 'Women', eventId: 2 },
-]
 
 interface StandingRow {
   noc: string
@@ -33,48 +26,22 @@ function deriveStandings(teams: TeamData[]): StandingRow[] {
 interface Props {
   season: string
   competition: string
+  eventId: number
+  refreshTrigger: number
 }
 
-export function Standings({ season, competition }: Props) {
-  const [eventId, setEventId] = useState(1)
-
-  // sessionId=0 always returns the latest session, giving current cumulative standings
-  const { games, loading, error, refresh, nextRefreshAt } = useLiveResults({ season, competition, eventId, sessionId: 0 })
+export function Standings({ season, competition, eventId, refreshTrigger }: Props) {
+  const { games, loading, error } = useLiveResults({ season, competition, eventId, sessionId: 0 }, refreshTrigger)
 
   const allTeams = games.flatMap(g => [g.homeTeam, g.awayTeam])
   const rows = deriveStandings(allTeams)
 
   return (
     <div>
-      {/* Men / Women toggle */}
-      <div className="flex items-center gap-4 mb-6">
-        <div className="flex rounded-lg overflow-hidden border border-gray-300">
-          {EVENTS.map(e => (
-            <button
-              key={e.eventId}
-              onClick={() => setEventId(e.eventId)}
-              className={`px-4 py-1.5 text-sm font-medium transition-colors ${
-                eventId === e.eventId
-                  ? 'bg-blue-900 text-white'
-                  : 'bg-white text-gray-600 hover:bg-gray-50'
-              }`}
-            >
-              {e.label}
-            </button>
-          ))}
-        </div>
-        <RefreshButton onRefresh={refresh} nextRefreshAt={nextRefreshAt} />
-      </div>
-
-      {loading && <div className="text-center py-12 text-gray-400">Loading standings…</div>}
-      {error && (
-        <div className="text-center py-12 text-red-500">
-          Error: {error}
-          <button onClick={refresh} className="ml-2 underline">Retry</button>
-        </div>
-      )}
+      {loading && <div className="text-center py-12 text-gray-400">Loading…</div>}
+      {error && <div className="text-center py-6 text-red-500 text-sm">Error: {error}</div>}
       {!loading && !error && rows.length === 0 && (
-        <div className="text-center py-12 text-gray-400">No standings data available.</div>
+        <div className="text-center py-12 text-gray-400">No data available.</div>
       )}
 
       {rows.length > 0 && (
