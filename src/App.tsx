@@ -42,6 +42,18 @@ function App() {
         {tab === 'scores'    && <Scoreboard season="2526" competition="WJCC" />}
         {tab === 'standings' && <Standings  season="2526" competition="WJCC" />}
       </main>
+
+      <footer className="mt-8 py-4 border-t border-gray-200 text-center text-xs text-gray-400">
+        Site data sourced from{' '}
+        <a
+          href="https://livescores.worldcurling.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-gray-600"
+        >
+          livescores.worldcurling.org
+        </a>
+      </footer>
     </div>
   )
 }
