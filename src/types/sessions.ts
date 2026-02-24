@@ -34,6 +34,19 @@ export const WOMEN_SESSIONS: Session[] = [
   { id: 11, label: 'Finals',      startUtc: '2026-03-03T08:00:00Z' },
 ]
 
+const SESSION_DURATION_MS = 3.5 * 60 * 60 * 1000 // sessions last ~3.5 hours
+const PRE_START_WINDOW_MS = 15 * 60 * 1000       // show session if starting within 15 min
+
+/** Returns the session ID that is currently active or about to start, or 0 (latest) if none. */
+export function getActiveSession(sessions: Session[]): number {
+  const now = Date.now()
+  const active = sessions.find(s => {
+    const start = new Date(s.startUtc).getTime()
+    return now >= start - PRE_START_WINDOW_MS && now <= start + SESSION_DURATION_MS
+  })
+  return active?.id ?? 0
+}
+
 const dateFormat = new Intl.DateTimeFormat(undefined, {
   weekday: 'short', month: 'short', day: 'numeric',
 })

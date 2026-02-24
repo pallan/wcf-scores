@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useLiveResults } from '../hooks/useLiveResults'
 import { GameCard } from './GameCard'
 import { RefreshButton } from './RefreshButton'
-import { MEN_SESSIONS, WOMEN_SESSIONS, formatSessionDate, formatSessionTime, type Session } from '../types/sessions'
+import { MEN_SESSIONS, WOMEN_SESSIONS, formatSessionDate, formatSessionTime, getActiveSession, type Session } from '../types/sessions'
 
 const EVENTS = [
   { label: 'Men',   eventId: 1, sessions: MEN_SESSIONS },
@@ -17,7 +17,11 @@ interface Props {
 }
 
 export function Scoreboard({ season, competition }: Props) {
-  const [eventId, setEventId] = useState(1)
+  const [eventId, setEventId] = useState(() => {
+    const menActive   = getActiveSession(MEN_SESSIONS)   !== 0
+    const womenActive = getActiveSession(WOMEN_SESSIONS) !== 0
+    return !menActive && womenActive ? 2 : 1
+  })
   const [sessionId, setSessionId] = useState(0)
 
   const currentEvent = EVENTS.find(e => e.eventId === eventId)!
