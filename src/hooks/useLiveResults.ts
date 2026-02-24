@@ -1,12 +1,15 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { fetchLiveResults, type FetchParams } from '../utils/api'
 import type { Game } from '../types/api'
 
+const INTERVAL_MS = 2 * 60 * 1000
 
 export function useLiveResults(params: FetchParams) {
   const [games, setGames] = useState<Game[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [nextRefreshAt, setNextRefreshAt] = useState(() => Date.now() + INTERVAL_MS)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const load = useCallback(async () => {
     try {
@@ -20,11 +23,27 @@ export function useLiveResults(params: FetchParams) {
     }
   }, [params.season, params.competition, params.eventId, params.sessionId])
 
-  useEffect(() => {
-    load()
-    const interval = setInterval(load, 2 * 60 * 1000)
-    return () => clearInterval(interval)
+  const startInterval = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current)
+    setNextRefreshAt(Date.now() + INTERVAL_MS)
+    intervalRef.current = setInterval(() => {
+      load()
+      setNextRefreshAt(Date.now() + INTERVAL_MS)
+    }, INTERVAL_MS)
   }, [load])
 
-  return { games, loading, error, refresh: load }
+  useEffect(() => {
+    load()
+    startInterval()
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current)
+    }
+  }, [load, startInterval])
+
+  const refresh = useCallback(async () => {
+    await load()
+    startInterval()
+  }, [load, startInterval])
+
+  return { games, loading, error, refresh, nextRefreshAt }
 }

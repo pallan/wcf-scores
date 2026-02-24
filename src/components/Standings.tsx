@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useLiveResults } from '../hooks/useLiveResults'
+import { RefreshButton } from './RefreshButton'
 import type { TeamData } from '../types/api'
 
 const EVENTS = [
@@ -38,7 +39,7 @@ export function Standings({ season, competition }: Props) {
   const [eventId, setEventId] = useState(1)
 
   // sessionId=0 always returns the latest session, giving current cumulative standings
-  const { games, loading, error, refresh } = useLiveResults({ season, competition, eventId, sessionId: 0 })
+  const { games, loading, error, refresh, nextRefreshAt } = useLiveResults({ season, competition, eventId, sessionId: 0 })
 
   const allTeams = games.flatMap(g => [g.homeTeam, g.awayTeam])
   const rows = deriveStandings(allTeams)
@@ -62,9 +63,7 @@ export function Standings({ season, competition }: Props) {
             </button>
           ))}
         </div>
-        <button onClick={refresh} className="text-sm text-blue-700 hover:underline">
-          Refresh
-        </button>
+        <RefreshButton onRefresh={refresh} nextRefreshAt={nextRefreshAt} />
       </div>
 
       {loading && <div className="text-center py-12 text-gray-400">Loading standings…</div>}

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useLiveResults } from '../hooks/useLiveResults'
 import { GameCard } from './GameCard'
+import { RefreshButton } from './RefreshButton'
 import { MEN_SESSIONS, WOMEN_SESSIONS, formatSessionDate, formatSessionTime, type Session } from '../types/sessions'
 
 const EVENTS = [
@@ -22,7 +23,7 @@ export function Scoreboard({ season, competition }: Props) {
   const currentEvent = EVENTS.find(e => e.eventId === eventId)!
   const sessions: Session[] = currentEvent.sessions
 
-  const { games, loading, error, refresh } = useLiveResults({ season, competition, eventId, sessionId })
+  const { games, loading, error, refresh, nextRefreshAt } = useLiveResults({ season, competition, eventId, sessionId })
 
   function handleEventChange(newEventId: number) {
     setEventId(newEventId)
@@ -48,9 +49,7 @@ export function Scoreboard({ season, competition }: Props) {
             </button>
           ))}
         </div>
-        <button onClick={refresh} className="text-sm text-blue-700 hover:underline">
-          Refresh
-        </button>
+        <RefreshButton onRefresh={refresh} nextRefreshAt={nextRefreshAt} />
       </div>
 
       {/* Session picker */}
