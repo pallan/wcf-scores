@@ -22,6 +22,8 @@ export function useLiveResults(params: FetchParams) {
 
   useEffect(() => {
     load()
+    const interval = setInterval(load, 2 * 60 * 1000)
+    return () => clearInterval(interval)
   }, [load])
 
   return { games, loading, error, refresh: load }
