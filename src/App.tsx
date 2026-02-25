@@ -92,7 +92,7 @@ function App() {
       </main>
 
       <footer className="mt-8 py-4 border-t border-gray-200 text-center text-xs text-gray-400">
-        Site data sourced from{' '}
+        Data provided by World Curling and CURLIT (
         <a
           href="https://livescores.worldcurling.org"
           target="_blank"
@@ -101,6 +101,7 @@ function App() {
         >
           livescores.worldcurling.org
         </a>
+        ). This project is not sponsored or endorsed by World Curling or CURLIT.
       </footer>
     </div>
   )
