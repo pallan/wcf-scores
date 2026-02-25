@@ -6,7 +6,6 @@ interface StandingRow {
   name: string
   w: number
   l: number
-  pct: number
 }
 
 function deriveStandings(teams: TeamData[]): StandingRow[] {
@@ -17,7 +16,6 @@ function deriveStandings(teams: TeamData[]): StandingRow[] {
       name: t.teamShortName,
       w: t.w,
       l: t.l,
-      pct: t.w + t.l > 0 ? t.w / (t.w + t.l) : 0,
     })
   }
   return Array.from(map.values()).sort((a, b) => b.w - a.w || a.l - b.l)
@@ -45,15 +43,14 @@ export function Standings({ season, competition, eventId, refreshTrigger }: Prop
       )}
 
       {rows.length > 0 && (
-        <div className="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
-          <table className="w-full text-sm">
+        <div className="bg-white rounded-lg shadow border border-gray-200 overflow-hidden inline-block min-w-[180px]">
+          <table className="text-sm">
             <thead>
               <tr className="bg-blue-900 text-white text-xs uppercase tracking-wide">
-                <th className="text-left px-4 py-3 w-8">#</th>
-                <th className="text-left px-4 py-3">Team</th>
-                <th className="text-center px-4 py-3">W</th>
-                <th className="text-center px-4 py-3">L</th>
-                <th className="text-center px-4 py-3">Pct</th>
+                <th className="text-left px-3 py-3 w-6">#</th>
+                <th className="text-left px-3 py-3">Team</th>
+                <th className="text-center px-3 py-3">W</th>
+                <th className="text-center px-3 py-3">L</th>
               </tr>
             </thead>
             <tbody>
@@ -62,16 +59,10 @@ export function Standings({ season, competition, eventId, refreshTrigger }: Prop
                   key={row.noc}
                   className={`border-t border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
                 >
-                  <td className="px-4 py-3 text-gray-400 text-xs">{i + 1}</td>
-                  <td className="px-4 py-3">
-                    <div className="font-semibold text-gray-900">{row.name}</div>
-                    <div className="text-xs text-gray-400">{row.noc}</div>
-                  </td>
-                  <td className="px-4 py-3 text-center font-bold text-green-700">{row.w}</td>
-                  <td className="px-4 py-3 text-center text-gray-500">{row.l}</td>
-                  <td className="px-4 py-3 text-center text-gray-500">
-                    {row.pct.toFixed(3).replace(/^0/, '')}
-                  </td>
+                  <td className="px-3 py-2 text-gray-400 text-xs">{i + 1}</td>
+                  <td className="px-3 py-2 font-semibold text-gray-900 whitespace-nowrap">{row.name}</td>
+                  <td className="px-3 py-2 text-center font-bold text-green-700">{row.w}</td>
+                  <td className="px-3 py-2 text-center text-gray-500">{row.l}</td>
                 </tr>
               ))}
             </tbody>

@@ -1,4 +1,5 @@
 import type { Game } from '../types/api'
+import { flagForNoc } from '../utils/flags'
 
 const END_KEYS = ['1','2','3','4','5','6','7','8','9','10','EE']
 
@@ -16,6 +17,11 @@ export function GameCard({ game }: Props) {
   const { homeTeam, awayTeam, ends, sheet, status, cEnd } = game
 
   const visibleEnds = END_KEYS.filter(k => ends[k] !== undefined)
+
+  // Determine the key for the current end being played
+  const currentEndKey = status === 'running' && cEnd !== null
+    ? (cEnd > 10 ? 'EE' : cEnd.toString())
+    : null
 
   return (
     <div className="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
@@ -50,20 +56,28 @@ export function GameCard({ game }: Props) {
             {/* Home team */}
             <tr className="border-t border-gray-100">
               <td className="px-3 py-2 font-medium text-gray-900 flex items-center gap-1.5">
-                {homeTeam.lsce && (
-                  <span className="text-yellow-500 text-xs" title="Has hammer">●</span>
-                )}
+                <span>{flagForNoc(homeTeam.noc)}</span>
                 <span>{homeTeam.teamShortName}</span>
+                {homeTeam.lsfe && (
+                  <span className="text-gray-400 text-[10px] leading-none" title="Had hammer in end 1">●</span>
+                )}
                 <span className="text-xs text-gray-400">({homeTeam.w}-{homeTeam.l})</span>
               </td>
               {visibleEnds.map(k => {
                 const val = endDisplay(ends[k].h)
                 const isScoring = val !== '' && val !== 'X' && Number(val) > 0
+                const isCurrentEnd = k === currentEndKey
+                const hasHammer = isCurrentEnd && homeTeam.lsce
                 return (
                   <td key={k} className={`text-center px-1 py-2 text-xs ${
                     isScoring ? 'font-bold text-blue-700' : 'text-gray-500'
                   }`}>
-                    {val}
+                    {hasHammer
+                      ? <span className="flex flex-col items-center leading-none gap-0.5">
+                          <span className="text-yellow-400 text-[8px]">●</span>
+                          <span>{val}</span>
+                        </span>
+                      : val}
                   </td>
                 )
               })}
@@ -78,21 +92,29 @@ export function GameCard({ game }: Props) {
             <tr className="border-t border-gray-100">
               <td className="px-3 py-2 font-medium text-gray-900">
                 <div className="flex items-center gap-1.5">
-                  {awayTeam.lsce && (
-                    <span className="text-yellow-500 text-xs" title="Has hammer">●</span>
-                  )}
+                  <span>{flagForNoc(awayTeam.noc)}</span>
                   <span>{awayTeam.teamShortName}</span>
+                  {awayTeam.lsfe && (
+                    <span className="text-gray-400 text-[10px] leading-none" title="Had hammer in end 1">●</span>
+                  )}
                   <span className="text-xs text-gray-400">({awayTeam.w}-{awayTeam.l})</span>
                 </div>
               </td>
               {visibleEnds.map(k => {
                 const val = endDisplay(ends[k].a)
                 const isScoring = val !== '' && val !== 'X' && Number(val) > 0
+                const isCurrentEnd = k === currentEndKey
+                const hasHammer = isCurrentEnd && awayTeam.lsce
                 return (
                   <td key={k} className={`text-center px-1 py-2 text-xs ${
                     isScoring ? 'font-bold text-blue-700' : 'text-gray-500'
                   }`}>
-                    {val}
+                    {hasHammer
+                      ? <span className="flex flex-col items-center leading-none gap-0.5">
+                          <span className="text-yellow-400 text-[8px]">●</span>
+                          <span>{val}</span>
+                        </span>
+                      : val}
                   </td>
                 )
               })}
@@ -104,6 +126,12 @@ export function GameCard({ game }: Props) {
             </tr>
           </tbody>
         </table>
+      </div>
+
+      {/* Legend */}
+      <div className="px-3 py-1.5 border-t border-gray-100 flex gap-4 text-[11px] text-gray-400">
+        <span><span className="text-gray-400">●</span> First-end hammer</span>
+        <span><span className="text-yellow-400">●</span> Current hammer</span>
       </div>
     </div>
   )

@@ -72,7 +72,7 @@ function App() {
 
       <main className="max-w-7xl mx-auto p-6">
         <div className="flex gap-6 items-start">
-          <div className="w-2/3 min-w-0">
+          <div className="w-4/5 min-w-0">
             <Scoreboard
               season="2526"
               competition="WJCC"
@@ -80,7 +80,7 @@ function App() {
               refreshTrigger={refreshTrigger}
             />
           </div>
-          <div className="w-1/3 min-w-0">
+          <div className="w-1/5 min-w-0">
             <Standings
               season="2526"
               competition="WJCC"
