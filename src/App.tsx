@@ -92,7 +92,7 @@ function App() {
       </main>
 
       <footer className="mt-8 py-4 border-t border-gray-200 text-center text-xs text-gray-400">
-        Data provided by World Curling and CURLIT (
+        Data for this site is property of the World Curling Federation and CURLIT (
         <a
           href="https://livescores.worldcurling.org"
           target="_blank"

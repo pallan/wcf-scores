@@ -11,6 +11,12 @@ Built with [Vite](https://vite.dev), [React](https://react.dev), [TypeScript](ht
 - Session picker with times shown in your local timezone
 - Data sourced directly from the WCF live scores API
 
+## Attribution
+
+Data for this site is property of the World Curling Federation and CURLIT ([livescores.worldcurling.org](https://livescores.worldcurling.org)).
+
+This project is not sponsored or endorsed by World Curling or CURLIT.
+
 ## Development
 
 ```bash
