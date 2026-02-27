@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+@theme {
+  --color-wcf-ice-white:   #ecfafe;
+  --color-wcf-stone-navy:  #051739;
+  --color-wcf-house-blue:  #003faf;
+  --color-wcf-target-red:  #ff0303;
+  --color-wcf-dark-yellow: #ff9600;
+  --color-wcf-light-green: #abff9a;
+  --color-wcf-ice-blue:    #00e7ff;
+  --color-wcf-dark-red:    #ff7b7b;
+  --color-wcf-light-yellow:#fff99a;
+  --color-wcf-dark-green:  #28d200;
+}

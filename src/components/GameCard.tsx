@@ -27,7 +27,7 @@ export function GameCard({ game, onTeamClick }: Props) {
   return (
     <div className="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
       {/* Card header */}
-      <div className="flex items-center justify-between bg-blue-900 text-white px-3 py-1.5 text-sm">
+      <div className="flex items-center justify-between bg-wcf-house-blue text-white px-3 py-1.5 text-sm">
         <span className="font-semibold">Sheet {sheet}</span>
         <span className="text-xs">
           {status === 'running'
@@ -35,7 +35,7 @@ export function GameCard({ game, onTeamClick }: Props) {
             : 'Final'}
         </span>
         <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-          status === 'running' ? 'bg-green-500' : 'bg-gray-500'
+          status === 'running' ? 'bg-gradient-to-r from-wcf-dark-green to-wcf-light-green text-wcf-stone-navy' : 'bg-white text-wcf-house-blue'
         }`}>
           {status === 'running' ? 'LIVE' : 'OFFICIAL'}
         </span>
@@ -60,7 +60,7 @@ export function GameCard({ game, onTeamClick }: Props) {
                 <span>{flagForNoc(homeTeam.noc)}</span>
                 <button
                   onClick={() => onTeamClick?.(homeTeam.noc, homeTeam.teamShortName)}
-                  className="hover:underline hover:text-blue-700 transition-colors text-left"
+                  className="hover:underline hover:text-wcf-house-blue transition-colors text-left"
                 >
                   {homeTeam.teamShortName}
                 </button>
@@ -76,11 +76,11 @@ export function GameCard({ game, onTeamClick }: Props) {
                 const hasHammer = isCurrentEnd && homeTeam.lsce
                 return (
                   <td key={k} className={`text-center px-1 py-2 text-xs ${
-                    isScoring ? 'font-bold text-blue-700' : 'text-gray-500'
+                    isScoring ? 'font-bold text-wcf-house-blue' : 'text-gray-500'
                   }`}>
                     {hasHammer
                       ? <span className="flex flex-col items-center leading-none gap-0.5">
-                          <span className="text-yellow-400 text-[8px]">●</span>
+                          <span className="text-wcf-dark-yellow text-[8px]">●</span>
                           <span>{val}</span>
                         </span>
                       : val}
@@ -88,7 +88,7 @@ export function GameCard({ game, onTeamClick }: Props) {
                 )
               })}
               <td className={`text-center px-3 py-2 font-bold text-base ${
-                homeTeam.winner === true ? 'text-green-600' : 'text-gray-800'
+                homeTeam.winner === true ? 'text-wcf-dark-green' : 'text-gray-800'
               }`}>
                 {homeTeam.total}
               </td>
@@ -101,7 +101,7 @@ export function GameCard({ game, onTeamClick }: Props) {
                   <span>{flagForNoc(awayTeam.noc)}</span>
                   <button
                     onClick={() => onTeamClick?.(awayTeam.noc, awayTeam.teamShortName)}
-                    className="hover:underline hover:text-blue-700 transition-colors text-left"
+                    className="hover:underline hover:text-wcf-house-blue transition-colors text-left"
                   >
                     {awayTeam.teamShortName}
                   </button>
@@ -118,11 +118,11 @@ export function GameCard({ game, onTeamClick }: Props) {
                 const hasHammer = isCurrentEnd && awayTeam.lsce
                 return (
                   <td key={k} className={`text-center px-1 py-2 text-xs ${
-                    isScoring ? 'font-bold text-blue-700' : 'text-gray-500'
+                    isScoring ? 'font-bold text-wcf-house-blue' : 'text-gray-500'
                   }`}>
                     {hasHammer
                       ? <span className="flex flex-col items-center leading-none gap-0.5">
-                          <span className="text-yellow-400 text-[8px]">●</span>
+                          <span className="text-wcf-dark-yellow text-[8px]">●</span>
                           <span>{val}</span>
                         </span>
                       : val}
@@ -130,7 +130,7 @@ export function GameCard({ game, onTeamClick }: Props) {
                 )
               })}
               <td className={`text-center px-3 py-2 font-bold text-base ${
-                awayTeam.winner === true ? 'text-green-600' : 'text-gray-800'
+                awayTeam.winner === true ? 'text-wcf-dark-green' : 'text-gray-800'
               }`}>
                 {awayTeam.total}
               </td>
@@ -142,7 +142,7 @@ export function GameCard({ game, onTeamClick }: Props) {
       {/* Legend */}
       <div className="px-3 py-1.5 border-t border-gray-100 flex gap-4 text-[11px] text-gray-400">
         <span><span className="text-gray-400">●</span> First-end hammer</span>
-        <span><span className="text-yellow-400">●</span> Current hammer</span>
+        <span><span className="text-wcf-dark-yellow">●</span> Current hammer</span>
       </div>
     </div>
   )

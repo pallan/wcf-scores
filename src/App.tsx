@@ -44,10 +44,10 @@ function App() {
   }, [startInterval])
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-blue-900 text-white py-4 px-6 shadow">
+    <div className="min-h-screen bg-wcf-ice-white">
+      <header className="bg-gradient-to-r from-wcf-stone-navy to-wcf-house-blue text-white py-4 px-6 shadow">
         <h1 className="text-2xl font-bold tracking-tight">WCF Scores</h1>
-        <p className="text-blue-300 text-sm">World Junior Curling Championship 2025–26</p>
+        <p className="text-wcf-ice-blue text-sm">World Junior Curling Championship 2025–26</p>
       </header>
 
       {/* Controls bar */}
@@ -60,8 +60,8 @@ function App() {
                 onClick={() => setEventId(e.eventId)}
                 className={`px-4 py-1.5 text-sm font-medium transition-colors ${
                   eventId === e.eventId
-                    ? 'bg-blue-900 text-white'
-                    : 'bg-white text-gray-600 hover:bg-gray-50'
+                    ? 'bg-wcf-house-blue text-white'
+                    : 'bg-white text-gray-600 hover:bg-wcf-ice-white'
                 }`}
               >
                 {e.label}

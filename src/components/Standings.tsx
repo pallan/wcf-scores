@@ -47,7 +47,7 @@ export function Standings({ season, competition, eventId, refreshTrigger, onTeam
         <div className="bg-white rounded-lg shadow border border-gray-200 overflow-hidden inline-block min-w-[180px]">
           <table className="text-sm">
             <thead>
-              <tr className="bg-blue-900 text-white text-xs uppercase tracking-wide">
+              <tr className="bg-wcf-stone-navy text-white text-xs uppercase tracking-wide">
                 <th className="text-left px-3 py-3 w-6">#</th>
                 <th className="text-left px-3 py-3">Team</th>
                 <th className="text-center px-3 py-3">W</th>
@@ -64,12 +64,12 @@ export function Standings({ season, competition, eventId, refreshTrigger, onTeam
                   <td className="px-3 py-2 whitespace-nowrap">
                     <button
                       onClick={() => onTeamClick?.(row.noc, row.name)}
-                      className="font-semibold text-gray-900 hover:underline hover:text-blue-700 transition-colors text-left"
+                      className="font-semibold text-gray-900 hover:underline hover:text-wcf-house-blue transition-colors text-left"
                     >
                       {row.name}
                     </button>
                   </td>
-                  <td className="px-3 py-2 text-center font-bold text-green-700">{row.w}</td>
+                  <td className="px-3 py-2 text-center font-bold text-wcf-dark-green">{row.w}</td>
                   <td className="px-3 py-2 text-center text-gray-500">{row.l}</td>
                 </tr>
               ))}

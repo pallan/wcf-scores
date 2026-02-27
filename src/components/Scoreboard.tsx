@@ -52,15 +52,15 @@ export function Scoreboard({ season, competition, eventId, refreshTrigger, onTea
               onClick={() => setSessionId(s.id)}
               className={`flex-shrink-0 px-3 py-1.5 rounded-md text-xs border transition-colors text-left ${
                 sessionId === s.id
-                  ? 'bg-blue-900 text-white border-blue-900'
-                  : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400'
+                  ? 'bg-wcf-house-blue text-white border-wcf-house-blue'
+                  : 'bg-white text-gray-600 border-gray-300 hover:border-wcf-house-blue'
               }`}
             >
               <div className="font-medium">{s.label}</div>
-              <div className={`text-xs ${sessionId === s.id ? 'text-blue-200' : 'text-gray-400'}`}>
+              <div className={`text-xs ${sessionId === s.id ? 'text-wcf-ice-blue' : 'text-gray-400'}`}>
                 {formatSessionDate(s.startUtc)}
               </div>
-              <div className={`text-xs ${sessionId === s.id ? 'text-blue-200' : 'text-gray-400'}`}>
+              <div className={`text-xs ${sessionId === s.id ? 'text-wcf-ice-blue' : 'text-gray-400'}`}>
                 {formatSessionTime(s.startUtc)}
               </div>
             </button>

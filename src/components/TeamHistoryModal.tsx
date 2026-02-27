@@ -53,7 +53,7 @@ export function TeamHistoryModal({ noc, teamName, season, competition, eventId, 
             </div>
             {!loading && !error && (
               <div className="text-sm text-gray-500 mt-0.5">
-                <span className="font-semibold text-green-700">{wins}W</span>
+                <span className="font-semibold text-wcf-dark-green">{wins}W</span>
                 {' – '}
                 <span className="font-semibold text-gray-500">{losses}L</span>
                 {' across '}
@@ -91,8 +91,8 @@ export function TeamHistoryModal({ noc, teamName, season, competition, eventId, 
                 <div className="flex items-center justify-between bg-gray-50 px-3 py-2 text-xs text-gray-500">
                   <span className="font-medium text-gray-700">{sessionLabel}</span>
                   <span>Sheet {game.sheet}</span>
-                  <span className={`px-2 py-0.5 rounded-full font-medium text-white text-[11px] ${
-                    game.status === 'running' ? 'bg-green-500' : 'bg-gray-400'
+                  <span className={`px-2 py-0.5 rounded-full font-medium text-[11px] ${
+                    game.status === 'running' ? 'bg-gradient-to-r from-wcf-dark-green to-wcf-light-green text-wcf-stone-navy' : 'bg-gray-200 text-gray-600'
                   }`}>
                     {game.status === 'running' ? 'LIVE' : 'FINAL'}
                   </span>
@@ -107,13 +107,13 @@ export function TeamHistoryModal({ noc, teamName, season, competition, eventId, 
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="font-bold text-base">
-                      <span className={won ? 'text-green-600' : 'text-gray-800'}>{team.total}</span>
+                      <span className={won ? 'text-wcf-dark-green' : 'text-gray-800'}>{team.total}</span>
                       <span className="text-gray-400 mx-1">–</span>
-                      <span className={lost ? 'text-green-600' : 'text-gray-800'}>{opp.total}</span>
+                      <span className={lost ? 'text-wcf-dark-green' : 'text-gray-800'}>{opp.total}</span>
                     </span>
                     {(won || lost) && (
                       <span className={`text-xs font-bold px-2 py-0.5 rounded ${
-                        won ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'
+                        won ? 'bg-gradient-to-r from-wcf-light-green to-wcf-dark-green text-wcf-stone-navy' : 'bg-gradient-to-r from-wcf-target-red to-wcf-dark-red text-white'
                       }`}>
                         {won ? 'W' : 'L'}
                       </span>
@@ -138,8 +138,8 @@ export function TeamHistoryModal({ noc, teamName, season, competition, eventId, 
                         { label: teamName, teamData: team, side: isHome ? 'h' : 'a' as 'h' | 'a', highlight: true },
                         { label: opp.teamShortName, teamData: opp, side: isHome ? 'a' : 'h' as 'h' | 'a', highlight: false },
                       ].map(({ label, teamData, side, highlight }) => (
-                        <tr key={side} className={`border-t border-gray-100 ${highlight ? 'bg-blue-50' : ''}`}>
-                          <td className={`px-3 py-1.5 font-medium truncate max-w-[96px] ${highlight ? 'text-blue-900' : 'text-gray-600'}`}>
+                        <tr key={side} className={`border-t border-gray-100 ${highlight ? 'bg-wcf-ice-white' : ''}`}>
+                          <td className={`px-3 py-1.5 font-medium truncate max-w-[96px] ${highlight ? 'text-wcf-stone-navy' : 'text-gray-600'}`}>
                             {label}
                           </td>
                           {visibleEnds.map(k => {
@@ -147,7 +147,7 @@ export function TeamHistoryModal({ noc, teamName, season, competition, eventId, 
                             const isScoring = val !== '' && val !== 'X' && Number(val) > 0
                             return (
                               <td key={k} className={`text-center px-1 py-1.5 ${
-                                isScoring ? 'font-bold text-blue-700' : 'text-gray-400'
+                                isScoring ? 'font-bold text-wcf-house-blue' : 'text-gray-400'
                               }`}>
                                 {val}
                               </td>
