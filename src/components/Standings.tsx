@@ -26,9 +26,10 @@ interface Props {
   competition: string
   eventId: number
   refreshTrigger: number
+  onTeamClick?: (noc: string, name: string) => void
 }
 
-export function Standings({ season, competition, eventId, refreshTrigger }: Props) {
+export function Standings({ season, competition, eventId, refreshTrigger, onTeamClick }: Props) {
   const { games, loading, error } = useLiveResults({ season, competition, eventId, sessionId: 0 }, refreshTrigger)
 
   const allTeams = games.flatMap(g => [g.homeTeam, g.awayTeam])
@@ -60,7 +61,14 @@ export function Standings({ season, competition, eventId, refreshTrigger }: Prop
                   className={`border-t border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
                 >
                   <td className="px-3 py-2 text-gray-400 text-xs">{i + 1}</td>
-                  <td className="px-3 py-2 font-semibold text-gray-900 whitespace-nowrap">{row.name}</td>
+                  <td className="px-3 py-2 whitespace-nowrap">
+                    <button
+                      onClick={() => onTeamClick?.(row.noc, row.name)}
+                      className="font-semibold text-gray-900 hover:underline hover:text-blue-700 transition-colors text-left"
+                    >
+                      {row.name}
+                    </button>
+                  </td>
                   <td className="px-3 py-2 text-center font-bold text-green-700">{row.w}</td>
                   <td className="px-3 py-2 text-center text-gray-500">{row.l}</td>
                 </tr>

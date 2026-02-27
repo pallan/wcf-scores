@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { Scoreboard } from './components/Scoreboard'
 import { Standings } from './components/Standings'
 import { RefreshButton } from './components/RefreshButton'
+import { TeamHistoryModal } from './components/TeamHistoryModal'
 import { MEN_SESSIONS, WOMEN_SESSIONS, getActiveSession } from './types/sessions'
 
 const INTERVAL_MS = 2 * 60 * 1000
@@ -18,6 +19,7 @@ function App() {
     return !menActive && womenActive ? 2 : 1
   })
 
+  const [selectedTeam, setSelectedTeam] = useState<{ noc: string; name: string } | null>(null)
   const [refreshTrigger, setRefreshTrigger] = useState(0)
   const [nextRefreshAt, setNextRefreshAt] = useState(() => Date.now() + INTERVAL_MS)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -78,6 +80,7 @@ function App() {
               competition="WJCC"
               eventId={eventId}
               refreshTrigger={refreshTrigger}
+              onTeamClick={(noc, name) => setSelectedTeam({ noc, name })}
             />
           </div>
           <div className="w-1/5 min-w-0">
@@ -86,10 +89,23 @@ function App() {
               competition="WJCC"
               eventId={eventId}
               refreshTrigger={refreshTrigger}
+              onTeamClick={(noc, name) => setSelectedTeam({ noc, name })}
             />
           </div>
         </div>
       </main>
+
+      {selectedTeam && (
+        <TeamHistoryModal
+          noc={selectedTeam.noc}
+          teamName={selectedTeam.name}
+          season="2526"
+          competition="WJCC"
+          eventId={eventId}
+          sessions={eventId === 2 ? WOMEN_SESSIONS : MEN_SESSIONS}
+          onClose={() => setSelectedTeam(null)}
+        />
+      )}
 
       <footer className="mt-8 py-4 border-t border-gray-200 text-center text-xs text-gray-400">
         Data for this site is property of the World Curling Federation and CURLIT (

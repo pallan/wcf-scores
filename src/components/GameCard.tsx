@@ -11,9 +11,10 @@ function endDisplay(val: string) {
 
 interface Props {
   game: Game
+  onTeamClick?: (noc: string, name: string) => void
 }
 
-export function GameCard({ game }: Props) {
+export function GameCard({ game, onTeamClick }: Props) {
   const { homeTeam, awayTeam, ends, sheet, status, cEnd } = game
 
   const visibleEnds = END_KEYS.filter(k => ends[k] !== undefined)
@@ -57,7 +58,12 @@ export function GameCard({ game }: Props) {
             <tr className="border-t border-gray-100">
               <td className="px-3 py-2 font-medium text-gray-900 flex items-center gap-1.5">
                 <span>{flagForNoc(homeTeam.noc)}</span>
-                <span>{homeTeam.teamShortName}</span>
+                <button
+                  onClick={() => onTeamClick?.(homeTeam.noc, homeTeam.teamShortName)}
+                  className="hover:underline hover:text-blue-700 transition-colors text-left"
+                >
+                  {homeTeam.teamShortName}
+                </button>
                 {homeTeam.lsfe && (
                   <span className="text-gray-400 text-[10px] leading-none" title="Had hammer in end 1">●</span>
                 )}
@@ -93,7 +99,12 @@ export function GameCard({ game }: Props) {
               <td className="px-3 py-2 font-medium text-gray-900">
                 <div className="flex items-center gap-1.5">
                   <span>{flagForNoc(awayTeam.noc)}</span>
-                  <span>{awayTeam.teamShortName}</span>
+                  <button
+                    onClick={() => onTeamClick?.(awayTeam.noc, awayTeam.teamShortName)}
+                    className="hover:underline hover:text-blue-700 transition-colors text-left"
+                  >
+                    {awayTeam.teamShortName}
+                  </button>
                   {awayTeam.lsfe && (
                     <span className="text-gray-400 text-[10px] leading-none" title="Had hammer in end 1">●</span>
                   )}

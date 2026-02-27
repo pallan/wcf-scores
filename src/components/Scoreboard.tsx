@@ -15,9 +15,10 @@ interface Props {
   competition: string
   eventId: number
   refreshTrigger: number
+  onTeamClick?: (noc: string, name: string) => void
 }
 
-export function Scoreboard({ season, competition, eventId, refreshTrigger }: Props) {
+export function Scoreboard({ season, competition, eventId, refreshTrigger, onTeamClick }: Props) {
   const [sessionId, setSessionId] = useState(0)
 
   useEffect(() => {
@@ -78,7 +79,7 @@ export function Scoreboard({ season, competition, eventId, refreshTrigger }: Pro
           <p className="text-xs text-gray-500 mb-3">{games[0].gamesTitle}</p>
           <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
             {games.map(game => (
-              <GameCard key={game.sheet} game={game} />
+              <GameCard key={game.sheet} game={game} onTeamClick={onTeamClick} />
             ))}
           </div>
         </div>
