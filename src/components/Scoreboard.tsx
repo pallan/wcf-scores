@@ -31,17 +31,33 @@ export function Scoreboard({ season, competition, eventId, refreshTrigger, onTea
   return (
     <div>
       {/* Session picker */}
-      <div className="mb-1">
+      <div className="mb-5">
         <p className="text-xs text-gray-400 mb-2">
           Session times in your local time ({localTz})
         </p>
-        <div className="flex gap-2 overflow-x-auto pb-2 mb-5">
+
+        {/* Mobile: dropdown */}
+        <select
+          className="md:hidden w-full px-3 py-2 rounded-md text-sm border border-gray-300 bg-white text-gray-700 focus:outline-none focus:border-wcf-house-blue"
+          value={sessionId}
+          onChange={e => setSessionId(Number(e.target.value))}
+        >
+          <option value={0}>Current</option>
+          {sessions.map(s => (
+            <option key={s.id} value={s.id}>
+              {s.label} — {formatSessionDate(s.startUtc)} {formatSessionTime(s.startUtc)}
+            </option>
+          ))}
+        </select>
+
+        {/* Desktop: button row */}
+        <div className="hidden md:flex gap-2 overflow-x-auto pb-2">
           <button
             onClick={() => setSessionId(0)}
             className={`flex-shrink-0 px-3 py-1.5 rounded-md text-xs font-medium border transition-colors ${
               sessionId === 0
-                ? 'bg-blue-900 text-white border-blue-900'
-                : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400'
+                ? 'bg-wcf-house-blue text-white border-wcf-house-blue'
+                : 'bg-white text-gray-600 border-gray-300 hover:border-wcf-house-blue'
             }`}
           >
             Current
