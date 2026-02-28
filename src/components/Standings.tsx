@@ -44,10 +44,10 @@ export function Standings({ season, competition, eventId, refreshTrigger, onTeam
       )}
 
       {rows.length > 0 && (
-        <div className="bg-white rounded-lg shadow border border-gray-200 overflow-hidden inline-block min-w-[180px]">
-          <table className="text-sm">
+        <div className="bg-white rounded-lg shadow border border-gray-200 overflow-hidden w-full lg:inline-block lg:min-w-45">
+          <table className="text-sm w-full lg:w-auto">
             <thead>
-              <tr className="bg-wcf-stone-navy text-white text-xs uppercase tracking-wide">
+              <tr className="bg-wcf-house-blue text-white text-xs uppercase tracking-wide">
                 <th className="text-left px-3 py-3 w-6">#</th>
                 <th className="text-left px-3 py-3">Team</th>
                 <th className="text-center px-3 py-3">W</th>

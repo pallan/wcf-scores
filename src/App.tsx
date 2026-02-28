@@ -51,7 +51,7 @@ function App() {
       </header>
 
       {/* Controls bar */}
-      <div className="bg-white border-b border-gray-200 px-6">
+      <div className="bg-white border-b border-gray-200 px-4 md:px-6">
         <div className="max-w-7xl mx-auto py-3 flex items-center gap-4">
           <div className="flex rounded-lg overflow-hidden border border-gray-300">
             {EVENTS.map(e => (
@@ -72,9 +72,9 @@ function App() {
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto p-6">
-        <div className="flex gap-6 items-start">
-          <div className="w-4/5 min-w-0">
+      <main className="max-w-7xl mx-auto p-4 md:p-6">
+        <div className="flex flex-col-reverse lg:flex-row gap-6 items-start">
+          <div className="w-full lg:w-4/5 min-w-0">
             <Scoreboard
               season="2526"
               competition="WJCC"
@@ -83,7 +83,7 @@ function App() {
               onTeamClick={(noc, name) => setSelectedTeam({ noc, name })}
             />
           </div>
-          <div className="w-1/5 min-w-0">
+          <div className="w-full lg:w-1/5 min-w-0">
             <Standings
               season="2526"
               competition="WJCC"
