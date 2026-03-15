@@ -71,6 +71,7 @@ function App() {
               season={SEASON}
               competition={COMPETITION}
               eventId={EVENT_ID}
+              sessions={WWCC_SESSIONS}
               refreshTrigger={refreshTrigger}
               onTeamClick={(noc, name) => setSelectedTeam({ noc, name })}
             />
