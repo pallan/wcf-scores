@@ -1,12 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useLiveResults } from '../hooks/useLiveResults'
 import { GameCard } from './GameCard'
-import { MEN_SESSIONS, WOMEN_SESSIONS, formatSessionDate, formatSessionTime, type Session } from '../types/sessions'
-
-const SESSION_MAP: Record<number, Session[]> = {
-  1: MEN_SESSIONS,
-  2: WOMEN_SESSIONS,
-}
+import { formatSessionDate, formatSessionTime, type Session } from '../types/sessions'
 
 const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone
 
@@ -14,18 +9,13 @@ interface Props {
   season: string
   competition: string
   eventId: number
+  sessions: Session[]
   refreshTrigger: number
   onTeamClick?: (noc: string, name: string) => void
 }
 
-export function Scoreboard({ season, competition, eventId, refreshTrigger, onTeamClick }: Props) {
+export function Scoreboard({ season, competition, eventId, sessions, refreshTrigger, onTeamClick }: Props) {
   const [sessionId, setSessionId] = useState(0)
-
-  useEffect(() => {
-    setSessionId(0)
-  }, [eventId])
-
-  const sessions: Session[] = SESSION_MAP[eventId] ?? MEN_SESSIONS
   const { games, loading, error } = useLiveResults({ season, competition, eventId, sessionId }, refreshTrigger)
 
   return (

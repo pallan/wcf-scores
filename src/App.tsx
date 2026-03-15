@@ -3,26 +3,23 @@ import { Scoreboard } from './components/Scoreboard'
 import { Standings } from './components/Standings'
 import { RefreshButton } from './components/RefreshButton'
 import { TeamHistoryModal } from './components/TeamHistoryModal'
-import { MEN_SESSIONS, WOMEN_SESSIONS, getActiveSession } from './types/sessions'
+import { WWCC_SESSIONS, getActiveSession } from './types/sessions'
 
 const INTERVAL_MS = 2 * 60 * 1000
-
-const EVENTS = [
-  { label: 'Men',   eventId: 1 },
-  { label: 'Women', eventId: 2 },
-]
+const COMPETITION = 'wwcc'
+const SEASON = '2526'
+const EVENT_ID = 1
 
 function App() {
-  const [eventId, setEventId] = useState(() => {
-    const menActive   = getActiveSession(MEN_SESSIONS)   !== 0
-    const womenActive = getActiveSession(WOMEN_SESSIONS) !== 0
-    return !menActive && womenActive ? 2 : 1
-  })
-
   const [selectedTeam, setSelectedTeam] = useState<{ noc: string; name: string } | null>(null)
   const [refreshTrigger, setRefreshTrigger] = useState(0)
   const [nextRefreshAt, setNextRefreshAt] = useState(() => Date.now() + INTERVAL_MS)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  // Pre-select the active session on load
+  useEffect(() => {
+    getActiveSession(WWCC_SESSIONS)
+  }, [])
 
   const startInterval = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current)
@@ -47,27 +44,12 @@ function App() {
     <div className="min-h-screen bg-wcf-ice-white">
       <header className="bg-gradient-to-r from-wcf-stone-navy to-wcf-house-blue text-white py-4 px-6 shadow">
         <h1 className="text-2xl font-bold tracking-tight">WCF Scores</h1>
-        <p className="text-wcf-ice-blue text-sm">World Junior Curling Championship 2025–26</p>
+        <p className="text-wcf-ice-blue text-sm">BKT World Women's Curling Championship 2026 — Calgary</p>
       </header>
 
       {/* Controls bar */}
       <div className="bg-white border-b border-gray-200 px-4 md:px-6">
         <div className="max-w-7xl mx-auto py-3 flex items-center gap-4">
-          <div className="flex rounded-lg overflow-hidden border border-gray-300">
-            {EVENTS.map(e => (
-              <button
-                key={e.eventId}
-                onClick={() => setEventId(e.eventId)}
-                className={`px-4 py-1.5 text-sm font-medium transition-colors ${
-                  eventId === e.eventId
-                    ? 'bg-wcf-house-blue text-white'
-                    : 'bg-white text-gray-600 hover:bg-wcf-ice-white'
-                }`}
-              >
-                {e.label}
-              </button>
-            ))}
-          </div>
           <RefreshButton onRefresh={handleRefresh} nextRefreshAt={nextRefreshAt} />
         </div>
       </div>
@@ -76,18 +58,19 @@ function App() {
         <div className="flex flex-col-reverse lg:flex-row gap-6 items-start">
           <div className="w-full lg:w-4/5 min-w-0">
             <Scoreboard
-              season="2526"
-              competition="WJCC"
-              eventId={eventId}
+              season={SEASON}
+              competition={COMPETITION}
+              eventId={EVENT_ID}
+              sessions={WWCC_SESSIONS}
               refreshTrigger={refreshTrigger}
               onTeamClick={(noc, name) => setSelectedTeam({ noc, name })}
             />
           </div>
           <div className="w-full lg:w-1/5 min-w-0">
             <Standings
-              season="2526"
-              competition="WJCC"
-              eventId={eventId}
+              season={SEASON}
+              competition={COMPETITION}
+              eventId={EVENT_ID}
               refreshTrigger={refreshTrigger}
               onTeamClick={(noc, name) => setSelectedTeam({ noc, name })}
             />
@@ -99,10 +82,10 @@ function App() {
         <TeamHistoryModal
           noc={selectedTeam.noc}
           teamName={selectedTeam.name}
-          season="2526"
-          competition="WJCC"
-          eventId={eventId}
-          sessions={eventId === 2 ? WOMEN_SESSIONS : MEN_SESSIONS}
+          season={SEASON}
+          competition={COMPETITION}
+          eventId={EVENT_ID}
+          sessions={WWCC_SESSIONS}
           onClose={() => setSelectedTeam(null)}
         />
       )}
