@@ -11,4 +11,4 @@ echo 'export PATH=$HOME/.npm-global/bin:$PATH' >> ~/.bashrc
 echo 'export PATH=$HOME/.npm-global/bin:$PATH' >> ~/.zshrc
 
 # Install Claude Code marketplace plugins
-$HOME/.npm-global/bin/claude plugins install legacybridge-cc-plugins
+$HOME/.npm-global/bin/claude plugin marketplace add legacybridge-tech/claude-plugins
