@@ -45,5 +45,6 @@
     }
   },
   // Install Claude Code via native installer
+  "initializeCommand": "mkdir -p ~/.claude/commands ~/.claude/projects && touch ~/.claude/.credentials.json ~/.claude/settings.json ~/.claude/.claude.json",
   "postCreateCommand": "curl -fsSL https://claude.ai/install.sh | bash"
 }
