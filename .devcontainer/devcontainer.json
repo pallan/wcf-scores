@@ -6,11 +6,7 @@
   // Features to add to the dev container.
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/flexwie/devcontainer-features/op:1": {},
-    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
-  },
-  "remoteEnv": {
-    "CLAUDE_CONFIG_DIR": "/home/node/.claude"
+    "ghcr.io/flexwie/devcontainer-features/op:1": {}
   },
   // Forward Vite dev server port
   "forwardPorts": [
@@ -22,9 +18,13 @@
       "onAutoForward": "notify"
     }
   },
-  // Mounts: bind ~/.claude from host so credentials/config are available
+  // Mounts: bind targeted ~/.claude files/dirs from host so credentials/config are available
   "mounts": [
-    "source=${localEnv:HOME}/.claude,target=/home/node/.claude,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude/.credentials.json,target=/home/node/.claude/.credentials.json,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude/settings.json,target=/home/node/.claude/settings.json,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude/.claude.json,target=/home/node/.claude/.claude.json,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude/commands,target=/home/node/.claude/commands,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude/projects,target=/home/node/.claude/projects,type=bind,consistency=cached",
     "source=wcf-scores-history,target=/commandhistory,type=volume"
   ],
   // Configure tool-specific properties.
@@ -35,7 +35,8 @@
         "esbenp.prettier-vscode",
         "bradlc.vscode-tailwindcss",
         "streetsidesoftware.code-spell-checker",
-        "GitHub.copilot"
+        "GitHub.copilot",
+        "anthropic.claude-code"
       ],
       "settings": {
         "editor.formatOnSave": true,
@@ -43,6 +44,6 @@
       }
     }
   },
-  // Install dependencies and patch Claude paths after container creation
-  "postCreateCommand": "bash .devcontainer/fix-claude-paths.sh"
+  // Install Claude Code via native installer
+  "postCreateCommand": "curl -fsSL https://claude.ai/install.sh | bash"
 }
