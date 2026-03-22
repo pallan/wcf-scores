@@ -2,15 +2,13 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
   "name": "wcf-scores",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   // Features to add to the dev container.
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/flexwie/devcontainer-features/op:1": {},
-    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
-  },
-  "remoteEnv": {
-    "CLAUDE_CONFIG_DIR": "/home/node/.claude"
+    "ghcr.io/flexwie/devcontainer-features/op:1": {}
   },
   // Forward Vite dev server port
   "forwardPorts": [
@@ -22,10 +20,10 @@
       "onAutoForward": "notify"
     }
   },
-  // Mounts: bind ~/.claude from host so credentials/config are available
   "mounts": [
-    "source=${localEnv:HOME}/.claude,target=/home/node/.claude,type=bind,consistency=cached",
-    "source=wcf-scores-history,target=/commandhistory,type=volume"
+    "source=${localEnv:HOME}/.claude.json,target=/home/node/.host-claude.json,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude/.credentials.json,target=/home/node/.host-credentials.json,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.claude/commands,target=/home/node/.claude/commands,type=bind,consistency=cached"
   ],
   // Configure tool-specific properties.
   "customizations": {
@@ -35,7 +33,8 @@
         "esbenp.prettier-vscode",
         "bradlc.vscode-tailwindcss",
         "streetsidesoftware.code-spell-checker",
-        "GitHub.copilot"
+        "GitHub.copilot",
+        "anthropic.claude-code"
       ],
       "settings": {
         "editor.formatOnSave": true,
@@ -43,6 +42,6 @@
       }
     }
   },
-  // Install dependencies and patch Claude paths after container creation
-  "postCreateCommand": "bash .devcontainer/fix-claude-paths.sh"
+  "initializeCommand": "mkdir -p ~/.claude/commands && touch ~/.claude/.credentials.json && chmod 644 ~/.claude.json ~/.claude/.credentials.json",
+  "postCreateCommand": "bash .devcontainer/post-create.sh"
 }
