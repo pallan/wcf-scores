@@ -10,5 +10,5 @@ npm install -g @anthropic-ai/claude-code
 echo 'export PATH=$HOME/.npm-global/bin:$PATH' >> ~/.bashrc
 echo 'export PATH=$HOME/.npm-global/bin:$PATH' >> ~/.zshrc
 
-# Install Claude Code marketplace plugins
-$HOME/.npm-global/bin/claude plugin marketplace add legacybridge-tech/claude-plugins
+# Install Claude Code marketplace plugins (edit ~/.claude/commands/devcontainer-setup.sh on host to manage)
+bash ~/.claude/commands/devcontainer-setup.sh || true
