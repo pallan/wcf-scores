@@ -6,9 +6,9 @@ mkdir -p ~/.npm-global
 npm config set prefix ~/.npm-global
 npm install -g @anthropic-ai/claude-code
 
-# Add to PATH for both bash and zsh
 echo 'export PATH=$HOME/.npm-global/bin:$PATH' >> ~/.bashrc
 echo 'export PATH=$HOME/.npm-global/bin:$PATH' >> ~/.zshrc
 
-# Install Claude Code marketplace plugins (edit ~/.claude/commands/devcontainer-setup.sh on host to manage)
-bash ~/.claude/commands/devcontainer-setup.sh || true
+if [ -f ~/.claude/commands/devcontainer-setup.sh ]; then
+    bash ~/.claude/commands/devcontainer-setup.sh
+fi
