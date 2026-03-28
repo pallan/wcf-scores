@@ -3,10 +3,10 @@ import { Scoreboard } from './components/Scoreboard'
 import { Standings } from './components/Standings'
 import { RefreshButton } from './components/RefreshButton'
 import { TeamHistoryModal } from './components/TeamHistoryModal'
-import { WWCC_SESSIONS, getActiveSession } from './types/sessions'
+import { WMCC_SESSIONS, getActiveSession } from './types/sessions'
 
 const INTERVAL_MS = 2 * 60 * 1000
-const COMPETITION = 'wwcc'
+const COMPETITION = 'wmcc'
 const SEASON = '2526'
 const EVENT_ID = 1
 
@@ -18,7 +18,7 @@ function App() {
 
   // Pre-select the active session on load
   useEffect(() => {
-    getActiveSession(WWCC_SESSIONS)
+    getActiveSession(WMCC_SESSIONS) // pre-warm active session detection
   }, [])
 
   const startInterval = useCallback(() => {
@@ -44,7 +44,7 @@ function App() {
     <div className="min-h-screen bg-wcf-ice-white">
       <header className="bg-gradient-to-r from-wcf-stone-navy to-wcf-house-blue text-white py-4 px-6 shadow">
         <h1 className="text-2xl font-bold tracking-tight">WCF Scores</h1>
-        <p className="text-wcf-ice-blue text-sm">BKT World Women's Curling Championship 2026 — Calgary</p>
+        <p className="text-wcf-ice-blue text-sm">LGT World Men's Curling Championship 2026 — Ogden</p>
       </header>
 
       {/* Controls bar */}
@@ -61,7 +61,7 @@ function App() {
               season={SEASON}
               competition={COMPETITION}
               eventId={EVENT_ID}
-              sessions={WWCC_SESSIONS}
+              sessions={WMCC_SESSIONS}
               refreshTrigger={refreshTrigger}
               onTeamClick={(noc, name) => setSelectedTeam({ noc, name })}
             />
@@ -71,7 +71,7 @@ function App() {
               season={SEASON}
               competition={COMPETITION}
               eventId={EVENT_ID}
-              sessions={WWCC_SESSIONS}
+              sessions={WMCC_SESSIONS}
               refreshTrigger={refreshTrigger}
               onTeamClick={(noc, name) => setSelectedTeam({ noc, name })}
             />
@@ -86,7 +86,7 @@ function App() {
           season={SEASON}
           competition={COMPETITION}
           eventId={EVENT_ID}
-          sessions={WWCC_SESSIONS}
+          sessions={WMCC_SESSIONS}
           onClose={() => setSelectedTeam(null)}
         />
       )}
